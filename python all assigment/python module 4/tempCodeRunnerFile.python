@@ -1,0 +1,40 @@
+# Q-19 How Do You Handle Exceptions With Try/Except/Finally In Python? Explain with coding snippets
+
+# try:
+#     # Code block where exceptions may occur
+#     # This could be anything that might raise an exception
+#     result = 10 / 0  # This will raise a ZeroDivisionError
+# except ZeroDivisionError:
+#     # This block will execute if a ZeroDivisionError occurs in the try block
+#     print("Error: Division by zero!")
+# except Exception as e:
+#     # This block will handle any other exceptions not caught by previous blocks
+#     print("An unexpected error occurred:", e)
+# else:
+#     # This block will execute if no exceptions occur in the try block
+#     print("Division successful! Result:", result)
+# finally:
+#     # This block will execute regardless of whether an exception occurred or not
+#     print("Finally block executed, cleaning up resources...")
+
+
+# try:
+#     file = open("example.txt", "r")
+#     content = file.read()
+#     print(content)
+# except FileNotFoundError:
+#     print("File not found!")
+# finally:
+#     if 'file' in locals():
+#         file.close()
+
+try:
+    file = open("example.txt", "r")  # Try to open the file for reading
+    content = file.read()            # Read the content of the file
+    print(content)                   # Print the content to the console
+except FileNotFoundError:
+    print("File not found!")         # Handle the specific exception if the file is not found
+finally:
+    if 'file' in locals():           # Check if the 'file' variable exists in the local namespace
+        file.close()                 # Close the file to release system resources
+
