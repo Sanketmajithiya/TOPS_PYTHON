@@ -71,16 +71,3 @@ urlpatterns = [
 
  
  
-"""
-    wrappers in Python when we want to modify or extend the behavior of an existing function, method, or class without modifying its source code
-
-    decoreters:- chage the function behaviour with out changeing that actual code .    
-    
-    wrapper in python when we want to modify or extend the behavior of an exiting function,method, or class without modifying its source code .
-    
-    
-    
-
-
-
-"""
