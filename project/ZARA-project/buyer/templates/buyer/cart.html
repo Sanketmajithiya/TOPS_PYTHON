@@ -62,42 +62,35 @@ Cart
                 <div class="card-body">
                     <div class="d-flex align-items-start border-bottom pb-3">
                         <div class="me-4">
-                            <input type="checkbox">
-                        </div>
-                        <div class="me-4">
                             <img src="{{cartitem.product_id.image.url}}" alt="" class="avatar-lg rounded">
                         </div>
                         <div class="flex-grow-1 align-self-center overflow-hidden">
                             <div>
-                                <h5 class="text-truncate font-size-18"><a href="#"
-                                        class="text-dark">{{cartitem.product_id.title}}</a></h5>
+                                <h5 class="text-truncate font-size-18">
+                                    <a href="#" class="text-dark">{{cartitem.product_id.title}}</a>
+                                </h5>
                             </div>
                         </div>
+                        <input type="checkbox" checked>
                         <div class="flex-shrink-0 ms-2">
                             <ul class="list-inline mb-0 font-size-16">
                                 <li class="list-inline-item">
-                                    <a href="#" class="text-muted px-1">
-                                        <i class="mdi mdi-trash-can-outline"></i>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="#" class="text-muted px-1">
-                                        <i class="mdi mdi-heart-outline"></i>
+                                    <a href="{% url 'remove_from_cart' item_id=cartitem.product_id_id %}" class="text-muted px-1">
+                                        <i class="bi bi-trash"></i>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-
                     <div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mt-3">
                                     <p class="text-muted mb-2">Price</p>
-                                    <h5 class="mb-0 mt-2"><span class="text-muted me-2"><del
-                                                class="font-size-16 fw-normal">₹
-                                                {{cartitem.product_id.mrp_price}}</del></span>₹ <span
-                                            id="cart-selling-price">{{cartitem.product_id.selling_price}}</span>
+                                    <h5 class="mb-0 mt-2">
+                                        <span class="text-muted me-2">
+                                            <del class="font-size-16 fw-normal">₹{{cartitem.product_id.mrp_price}}</del>
+                                        </span>₹<span id="cart-selling-price">{{cartitem.product_id.selling_price}}</span>
                                     </h5>
                                 </div>
                             </div>
@@ -107,7 +100,7 @@ Cart
                                     <div class="d-inline-flex">
                                         <select class="form-select form-select-sm w-xl" name="quantity">
                                             {% for i in "123456789" %}
-                                                {% with i|add:"0" as num %}
+                                                {% with i|add:" " as num %}
                                                     <option value="{{ num }}" {% if cartitem.quantity == num %} selected {% endif %}>{{ num }}</option>
                                                 {% endwith %}
                                             {% endfor %}
@@ -118,47 +111,45 @@ Cart
                             <div class="col-md-3">
                                 <div class="mt-3">
                                     <p class="text-muted mb-2">Total</p>
-                                    <h5 id="cart-products-price">₹ {{cartitem.product_id.selling_price}}</h5>
+                                    <h5 id="cart-products-price">₹{{cartitem.product_id.selling_price}}</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             {% endfor %}
             {% else %}
             <p class="display-5 my-5"><i class="bi bi-cart"></i> &nbsp; Empty cart</p>
             {% endif %}
-            <!-- end card -->
             <div class="row my-4">
                 <div class="col-sm-6">
                     <a href="ecommerce-products.html" class="btn btn-link text-muted">
-                        <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
-                </div> <!-- end col -->
+                        <!-- <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping -->
+                    </a>
+                </div>
                 <div class="col-sm-6">
                     <div class="text-sm-end mt-2 mt-sm-0">
                         <input type="hidden" value="25" name="amount" id="order_amount">
-                        <button id="rzp-button1" type="submit" class="btn btn-success">Pay with razorpay</button>
+                        <button id="rzp-button1" type="submit" class="btn btn-success">Pay with Razorpay</button>
                     </div>
-                </div> <!-- end col -->
-            </div> <!-- end row-->
+                </div>
+            </div>
         </div>
 
         <div class="col-xl-4">
             <div class="mt-5 mt-lg-0">
                 <div class="card border shadow-none">
                     <div class="card-header bg-transparent border-bottom py-3 px-4">
-                        <h5 class="font-size-16 mb-0">Order Summary <span class="float-end">#MN0124</span></h5>
+                        <h5 class="font-size-16 mb-0">Order Summary <span class="float-end"></span></h5>
                     </div>
                     <div class="card-body p-4 pt-2">
-
                         <div class="table-responsive">
                             <table class="table mb-0">
                                 <tbody>
                                     <tr>
                                         <td>Sub Total :</td>
-                                        <td class="text-end" id="total-selected-cart-item-price">₹ 0</td>
+                                        <td class="text-end" id="total-selected-cart-item-price"></td>
                                     </tr>
                                     <tr>
                                         <td>Shipping Charge :</td>
@@ -166,45 +157,35 @@ Cart
                                     </tr>
                                     <tr class="bg-light">
                                         <th>Total :</th>
-                                        <td class="text-end">
-                                            ₹
-                                            <span class="fw-bold" id="final-order-price">
-                                                25
-                                            </span>
-                                        </td>
+                                        <td class="text-end">₹<span class="fw-bold" id="final-order-price">25</span></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <!-- end table-responsive -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- end row -->
-
+     </div>
 </div>
-<!-- razore pay callback link -->
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<script> 
-    // Get all quantity select elements
+<script>
+document.addEventListener('DOMContentLoaded', function () {
     var quantitySelects = document.querySelectorAll('select[name="quantity"]');
-    // Get all checkboxes
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    // Get the element where the total price of selected cart items will be displayed
     var totalSelectedPriceElement = document.getElementById('total-selected-cart-item-price');
+    var orderTotalPrice = document.getElementById('final-order-price');
+    var orderAmount = document.getElementById('order_amount');
+    var image = document.getElementById('');
 
-    var order_total_price = document.getElementById('final-order-price');
-    var order_amount = document.getElementById('order_amount');
 
-    // Calculate initial total price for each product
+    
+
     quantitySelects.forEach(function (select) {
         updateTotalPrice(select);
     });
 
-    // Add event listener for each quantity select element
     quantitySelects.forEach(function (select) {
         select.addEventListener('change', function () {
             updateTotalPrice(select);
@@ -212,34 +193,28 @@ Cart
         });
     });
 
-    // Add event listener for each checkbox
     checkboxes.forEach(function (checkbox) {
         checkbox.addEventListener('change', function () {
-            calculateCartTotal();
+            calculateCartTotal();c  
         });
     });
 
-    // Function to update total price for a specific product
     function updateTotalPrice(selectElement) {
-        var parentDiv = selectElement.closest('.card-body'); // Find the parent div of the select element
-        var sellingPriceElement = parentDiv.querySelector('#cart-selling-price'); // Get selling price element
-        var totalPriceElement = parentDiv.querySelector('#cart-products-price'); // Get total price element
+        var parentDiv = selectElement.closest('.card-body');
+        var sellingPriceElement = parentDiv.querySelector('#cart-selling-price');
+        var totalPriceElement = parentDiv.querySelector('#cart-products-price');
 
-        var sellingPrice = parseFloat(sellingPriceElement.textContent.replace('₹', '').trim());
+        var sellingPrice = parseFloat(sellingPriceElement.textContent.trim());
         var quantity = parseInt(selectElement.value);
         var totalPrice = sellingPrice * quantity;
-
+        
         totalPriceElement.textContent = '₹ ' + totalPrice.toFixed(2);
-
-        console.log('Updated total price for product:', totalPrice);
     }
 
-    // Function to calculate total cart price
     function calculateCartTotal() {
         var totalSelectedPrice = 0;
-        // Loop through each checkbox
+
         checkboxes.forEach(function (checkbox) {
-            // If checkbox is checked, get the corresponding total price
             if (checkbox.checked) {
                 var parentDiv = checkbox.closest('.card-body');
                 var totalPriceElement = parentDiv.querySelector('#cart-products-price');
@@ -247,14 +222,13 @@ Cart
                 totalSelectedPrice += totalPrice;
             }
         });
-        // Update the total price of selected cart items in the order summary
+
         totalSelectedPriceElement.textContent = '₹ ' + totalSelectedPrice.toFixed(2);
-        order_total_price.innerHTML = totalSelectedPrice + 25;
-        order_amount.value = totalSelectedPrice + 25;
-
-        console.log('Calculated total selected price:', totalSelectedPrice);
+        var finalPrice = totalSelectedPrice + 25;
+        orderTotalPrice.textContent = finalPrice.toFixed(2);
+        orderAmount.value = finalPrice.toFixed(2);
     }
-
+    
     document.getElementById('rzp-button1').onclick = function (e){
         e.preventDefault();
 
@@ -270,11 +244,12 @@ Cart
                 name: "Acme Corp",
                 description: "Test Transaction",
                 image: "https://example.com/your_logo",
-                order_id: result.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                order_id: result.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1.
                 handler: function (response) {
                   alert(response.razorpay_payment_id);
                   alert(response.razorpay_order_id);
                   alert(response.razorpay_signature);
+                  window.location.href = '/pay_success/';
                 },
                 prefill: {
                   name: "Gaurav Kumar",
@@ -304,30 +279,9 @@ Cart
               console.log(err);
             });
     }
-// Assuming you use jQuery for simplicity
-$.ajax({
-    url: '/pay/' + amount,
-    method: 'POST',
-    success: function(response) {
-        if (response.id) {
-            // Redirect to payment success page
-            window.location.href = '/payment-success/';
-        }
-    },
-    error: function(error) {
-        alert('Payment failed: ' + error.responseText);
-    }
+
+    calculateCartTotal();
 });
 
-   </script>
+</script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-

@@ -1,23 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.conf import settings    
-
+from django.conf import settings
 from authentication.models import customersModel, customerAddressModel
 from master.utils.LO_RANDOM.otp import generate_otp
 from master.utils.LO_VALIDATORS.fields import is_valid_email, is_valid_password
 from master.utils.LO_PAYMENT_GATWAY.razorpay_payment_gateway import razorpay_client
 from seller.models import productsModel, categoriesModel
-from .models import ContactUSModel,cartModel
+from .models import ContactUSModel, Order, OrderItem, cartModel,MyOrderItem
 import sanket_project
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
-from .models import Order, OrderItem, cartModel
-from .forms import OrderForm, OrderItemForm
-import razorpay
+# from .forms import OrderForm, OrderItemForm
+from django.http import HttpResponse
+from master.utils.LO_UNIQUE.generate_order_id import generate_unique_order_id
 
 
 import os
@@ -54,7 +53,6 @@ def register_view(request):
                         )
                         new_customer.save()
 
-                        # send confirmation mail
                         subject = 'Your One-Time Password (OTP) | ZARA-OUTFITS'
                         message = f"""
                         Dear Customer,
@@ -141,6 +139,10 @@ def login_view(request):
                     if get_customer.password == password_:
                         print(get_customer.customer_id, "Added")
                         request.session['customer_id'] = get_customer.customer_id
+                        request.session['name'] = get_customer.first_name
+                        request.session['email'] = get_customer.email
+                        request.session['address'] = "surat"
+                        
                         messages.success(request, "Now, you are logged in.")
                         return redirect('index_view')
                     else:
@@ -181,23 +183,26 @@ def new_collection_view(request):
     return render(request, 'buyer/new_collection.html', context)
 
 def prodcut_exist_in_cart(product_id):
-    return cartModel.objects.filter(product_id=product_id).exists()
+    
+    return cartModel.objects.filter(product_id_id=product_id).order_by('-created_at').exists()
 
 @login_required
 def add_item_in_cart(request, product_id):
     if not prodcut_exist_in_cart(product_id):
         new_cart_item = cartModel.objects.create(
-            customer_id_id=request.session['customer_id'],
-            product_id_id=product_id
+            customer_id_id = request.session['customer_id'],
+            product_id_id = product_id
         )
         new_cart_item.save()
         messages.success(request, "item added in cart.")
+        return redirect('shopping_view')
+        
     else:
         get_cart_item = cartModel.objects.get(product_id_id=product_id)
         get_cart_item.quantity += 1
         get_cart_item.save()
-    
-    return redirect('cart_view')
+        messages.success(request,'success fully  added in cart')
+        return redirect('shopping_view')
 
 def shopping_view(request):
     categoris = categoriesModel.objects.all()
@@ -241,7 +246,6 @@ def profile_view(request):
             get_address = customerAddressModel.objects.get(customer_id=customer_id_)
         except:
             get_address = False
-    
         context = {
             'get_customer':get_customer,
             'get_address':get_address
@@ -258,7 +262,6 @@ def update_personal_info(request):
         first_name_ = request.POST['firstname']
         last_name_ = request.POST['lastname']
         mobile_ = request.POST['mobile']
-
         try:
             get_customer = get_object_or_404(customersModel, customer_id=request.session['customer_id'])
         except customersModel.DoesNotExist:
@@ -334,13 +337,13 @@ def forgot_password_view(request):
                 return render(request, 'buyer/change_password.html', context)
     return render(request, 'buyer/forgot.html')
 
+
 def reset_password_otp_verification(request):
     if request.method == "POST":
         cum_email = request.POST['email']
         otp_ = request.POST['otp']
         new_password_ = request.POST['new_password']
         confirm_password_ = request.POST['confirm_password']
-
         try : 
             check_user = customersModel.objects.get(email=cum_email)
         except Exception as e:
@@ -369,34 +372,108 @@ def buy_now(request, product_id):
     return render(request, "buyer/payment_page.html")
 
 
-
-
+@login_required
 def order_detail(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     return render(request, 'order_detail.html', {'order': order})
 
+
 @login_required
-def cart_view(request):
+def cart_view(request):    
     cartItems = cartModel.objects.filter(customer_id_id=request.session['customer_id'])
     print(cartItems)
     context = {
-         'cartItems':cartItems
-     }
+         'cartItems':cartItems,
+    }
     return render(request, 'buyer/cart.html',context)
+
+@login_required
+def myorder_view(request):    
+    orders_objects = MyOrderItem.objects.all()
+    context = {
+         'orders':orders_objects,
+    }
+    return render(request, 'buyer/myorders.html',context)
+
 
 @login_required
 def proceed_pay_view(request):
     return render(request, 'buyer/proceed_to_pay.html')
 
 @login_required
-def pay(request,amt):
-    print(amt)
-    amount = int(amt)*100
-    data = { "amount": amount, "currency": "INR", "receipt": "order_rcptid_11" }
-    print(amount, data, '====')
-    p = razorpay_client.order.create(data=data)   
-    print(p)
-    return JsonResponse(p)
-    return render(request, "pay_success.html")
+def pay(request, amt):
+    request.session["amt"] = amt
+    amount = int(float(amt) * 100)  
+    data = {
+        "amount": amount, 
+        "currency": "INR", 
+        "receipt": "order_rcptid_11"
+    }
+    try:
+        razorpay_order = razorpay_client.order.create(data=data)
+        return JsonResponse(razorpay_order)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+    
+    
+@login_required
+def pay_success(request):
+    ordered_items = cartModel.objects.filter(customer_id_id=request.session['customer_id'])
+    my_orders = list(ordered_items)
+    
+    print("Ordered items retrieved:##############", my_orders)
+    
+    customer_name = request.session.get('name')
+    customer_email = request.session.get('email')
+    shipping_address = request.session.get('address')
+    amt = request.session.get("amt")
 
+    if not all([customer_name, customer_email, shipping_address, amt]):
+        return HttpResponse('Required session data (name, email, address, amount) not found.', status=400)
+   
+    total_price_ = amt  
 
+    new_orders = Order(
+        customer_name=customer_name,
+        customer_email=customer_email,
+        shipping_address=shipping_address, 
+        total_price=total_price_
+    )
+    new_orders.save()
+    
+    for data in ordered_items:
+        print(data.customer_id,data.product_id.id,data.product_id.mrp_price,data.quantity,new_orders.order_id,"************")  
+        MyOrderItem.objects.create(
+            order_id=new_orders,
+            product_id=data.product_id,
+            quantity=data.quantity,
+            price=data.product_id.mrp_price
+        )
+    
+    ordered_items.delete()
+    
+    context = {
+        "products" : my_orders,
+        "customer_name": customer_name,
+        "customer_email": customer_email,
+        "shipping_address": shipping_address,
+        "amt": amt
+    }
+    return render(request, "buyer/pay_success.html", context)
+
+@login_required   
+def remove_from_cart(request, item_id):
+    cart_item = cartModel.objects.get(product_id_id=item_id)
+    cart_item.delete()
+    return redirect('cart_view')  
+
+@login_required
+def remove_from_myorders(request):
+    if request.method == 'POST':
+        order_id = request.POST.get('order_id')
+        order = MyOrderItem.objects.get(order_id = order_id)
+        order.delete()
+        response = redirect("myorder_view")
+        messages.success(request,"Delete Successfull")
+        return response
+    return redirect("myorder_view")
