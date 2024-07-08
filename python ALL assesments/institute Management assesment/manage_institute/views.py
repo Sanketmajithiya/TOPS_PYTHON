@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.conf import settings
 from .models import Teacher, Department, Student, Club, Book
 from .forms import ClubForm, BookForm, StudentForm
@@ -18,6 +17,9 @@ def is_logged_in(func):
 
 def welcome_view(request):
     return render(request, "welcome.html")
+
+def index_view(request):
+    return render(request, 'index.html')
 
 def register_teacher(request):
     if request.method == 'POST':
@@ -50,8 +52,6 @@ def login_view(request):
                 return redirect('home_view')
     return render(request, 'login.html')
 
-def rough_view(request):
-    return render(request, 'rough.html')
 
 @is_logged_in
 def home_view(request):
@@ -214,6 +214,7 @@ def student_delete(request, pk):
         return redirect('student_list')
     return render(request, 'for_student/student_confirm_delete.html', {'student': student})
 
+
 def forgot_password_view(request):
     if request.method == 'POST':
         email_ = request.POST['email']
@@ -222,7 +223,7 @@ def forgot_password_view(request):
             check_user = Student.objects.get(email=email_)
         except Student.DoesNotExist:
             print("This user doesn't exist")
-            return HttpResponse({'success': False, 'message': 'User does not exist'})
+            return JsonResponse({'success': False, 'message': 'User does not exist'})
         else:
             if action == 'resend_otp':
                 otp_ = generate_otp(6)
@@ -233,12 +234,11 @@ def forgot_password_view(request):
                 send_mail(subject, message, from_email, recipient_list)
                 check_user.otp = otp_
                 check_user.save()
-                return HttpResponse({'success': True, 'message': 'OTP Resent successfully'})
-
+                return JsonResponse({'success': True, 'message': 'OTP Resent successfully'})
             otp_ = generate_otp(6)
             subject = "Authentication Code for [Forgot password]"
             message = f"Code for [Password Change]: {otp_}"
-            from_email = settings.EMAIL_HOST_USER
+            from_email = sanket_project.settings.EMAIL_HOST_USER
             recipient_list = [email_]
             send_mail(subject, message, from_email, recipient_list)
             check_user.otp = otp_
@@ -255,52 +255,53 @@ def reset_password_otp_verification(request):
         confirm_password = request.POST.get('confirm_password')
 
         if new_password != confirm_password:
-            return HttpResponse("Passwords do not match")
+            return JsonResponse("Passwords do not match")
 
         student = get_object_or_404(Student, email=email)
 
         if student.otp == entered_otp:
             student.password = new_password
             student.save()
-            return HttpResponse("Password successfully reset")
+            return JsonResponse("Password successfully reset",safe=False)
         else:
-            return HttpResponse("Invalid OTP")
+            return JsonResponse("Invalid OTP",safe=False)
 
     return render(request, 'change_password.html')
 
-def forgot_password_t(request):
+
+
+
+def forgot_password_view_t(request):
     if request.method == 'POST':
-        email_ = request.POST.get('email')
-        action = request.POST.get('action')
-
-        if not email_ or not action:
-            return HttpResponseBadRequest("Missing 'email' or 'action' parameter")
-
+        email_ = request.POST['email']
+        action = request.POST.get('action') 
         try:
             check_user = Teacher.objects.get(email=email_)
         except Teacher.DoesNotExist:
             print("This user doesn't exist")
-            return HttpResponse({'success': False, 'message': 'User does not exist'})
-
-        otp_ = generate_otp(6)
-        subject = "Authentication Code for [Forgot password]"
-        message = f"Code for [Password Change]: {otp_}"
-        from_email = settings.EMAIL_HOST_USER
-        recipient_list = [email_]
-
-        if action == 'resend_otp':
+            return JsonResponse({'success': False, 'message': 'User does not exist'})
+        else:
+            if action == 'resend_otp':
+                otp_ = generate_otp(6)
+                subject = "Authentication Code for [Forgot password]"
+                message = f"Code for [Password Change]: {otp_}"
+                from_email = sanket_project.settings.EMAIL_HOST_USER
+                recipient_list = [email_]
+                send_mail(subject, message, from_email, recipient_list)
+                check_user.otp = otp_
+                check_user.save()
+                return JsonResponse({'success': True, 'message': 'OTP Resent successfully'})
+            otp_ = generate_otp(6)
+            subject = "Authentication Code for [Forgot password]"
+            message = f"Code for [Password Change]: {otp_}"
+            from_email = sanket_project.settings.EMAIL_HOST_USER
+            recipient_list = [email_]
             send_mail(subject, message, from_email, recipient_list)
             check_user.otp = otp_
             check_user.save()
-            return HttpResponse({'success': True, 'message': 'OTP Resent successfully'})
-
-        send_mail(subject, message, from_email, recipient_list)
-        check_user.otp = otp_
-        check_user.save()
-        context = {'cum_email': email_}
-        return render(request, 'change_password_t.html', context)
-
-    return render(request, 'forgot.html')
+            context = {'cum_email': email_}
+            return render(request, 'teacher/change_password_t.html', context)
+    return render(request, 'teacher/forgot_t.html')
 
 def reset_password_otp_verification_t(request):
     if request.method == 'POST':
@@ -310,15 +311,20 @@ def reset_password_otp_verification_t(request):
         confirm_password = request.POST.get('confirm_password')
 
         if new_password != confirm_password:
-            return HttpResponse("Passwords do not match")
+            return JsonResponse("Passwords do not match")
 
         teacher = get_object_or_404(Teacher, email=email)
 
         if teacher.otp == entered_otp:
             teacher.password = new_password
             teacher.save()
-            return HttpResponse("Password successfully reset")
+            return JsonResponse("Password successfully reset",safe=False)
         else:
-            return HttpResponse("Invalid OTP")
+            return JsonResponse("Invalid OTP",safe=False)
 
-    return render(request, 'change_password_t.html')
+    return render(request, 'teacher/change_password_t.html')
+
+
+
+
+

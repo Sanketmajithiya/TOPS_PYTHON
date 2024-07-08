@@ -2,6 +2,7 @@ from django.urls import path
 from .views import *         
 
 urlpatterns = [
+    
     path('', welcome_view, name='welcome_view'),
     path('login_view/',login_view,name='login_view'),
     path('logout/',logout,name='logout'),
@@ -10,13 +11,11 @@ urlpatterns = [
     path('home_view/', home_view, name='home_view'),
     path('student_home_view/', student_home_view, name='student_home_view'),
 
-    
-    path('clubs/', club_list, name='club_list'),
+    path('clubs/', club_list, name='club_list'),    
     path('clubs/create/', club_create, name='club_create'),
     path('clubs/<int:pk>/', club_detail, name='club_detail'),
     path('clubs/<int:pk>/update/', club_update, name='club_update'),
     path('clubs/<int:pk>/delete/', club_delete, name='club_delete'),
-
 
     path('books/', book_list, name='book_list'),
     path('books/create/', book_create, name='book_create'),
@@ -31,15 +30,12 @@ urlpatterns = [
     path('students/<int:pk>/update/', student_update, name='student_update'),
     path('students/<int:pk>/delete/', student_delete, name='student_delete'),
     
-    path('rough_view/',rough_view, name='rough_view'),
-    
     path('forgot_password/', forgot_password_view, name='forgot_password_view'),
-    path('reset_password_otp_verification/', reset_password_otp_verification,
-    name='reset_password_otp_verification'),
+    path('reset_password_otp_verification/', reset_password_otp_verification,    name='reset_password_otp_verification'),
     
-    path('forgot_password_t/', forgot_password_t, name='forgot_password_view_t'),
-    path('reset_password_otp_verification_t/', reset_password_otp_verification_t,
-    name='reset_password_otp_verification_t'),
+    path('forgot_password_t/', forgot_password_view_t, name='forgot_password_view_t'),
+    path('reset_password_otp_verification_t/', reset_password_otp_verification_t,    name='reset_password_otp_verification_t'),
+        
 ]    
     
     
@@ -55,19 +51,19 @@ urlpatterns = [
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
  
+
+
+  
  
+"""
+    wrappers in Python when we want to modify or extend the behavior of an existing function, method, or class without modifying its source code
+
+    wrapper :- in python we want to modify or extend the behavior of an existing funnction,method, or class
+    without modifying its source code
+
+    decoreters:- chage the function behaviour with out changeing that actual code .     
+    
+
+"""
