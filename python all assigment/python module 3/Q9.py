@@ -1,33 +1,21 @@
-# Q.9 Write a Python function that takes two lists and returns true if they haveat least one common member. 
+# Write a Python function that takes two lists and returns true if they have at least one common member. 
 
-def common_list(list1, list2):
-    for item in list1:
-        if item in list2:
-            return True
-        return False
-    
-    list1 = [1,2,3,6,5]
-    list2 = [4,6,7,8,9]
-print(common_list('list1','list2'))
-
-
-
-
+def compare(list1,list2):
+    flag = False
+    for i in list1:
+        for j in list2:
+            if i==j:
+                flag = True
+                break
+    if flag:
+        print("both list have some common factor")
+    else:
+        print("both list have nothing to common")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+list1 = [1,2,3,4,5,6,7,8,9,10]
+list2 = [10,11,12,13,14,15,16]
+list3 = ["sanket","majithiya","prashant"]
+list4 = ["rahul","ramesh","mahesh"]
+compare(list1,list2)
+compare(list3,list4)

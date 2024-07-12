@@ -1,6 +1,14 @@
-# Q.49 Write a Python function to check whether a number is in a given range.
+# Write a Python function to check whether a number is in a given range 
 
-num = 10
-lower_bound = 5
-upper_bound = 15
-print(f"{num} is {'in' if lower_bound <= num <= upper_bound else 'not in'} the range between {lower_bound} and {upper_bound}.")
+def checkNum(start,end,num):
+    if num in range(start,end+1):
+        return f"{num} is present in range"
+    else:
+        return f"{num} is not present in range"
+
+
+startRange = int(input("Enter starting range: "))
+endRange = int(input("Enter ending range: "))
+inputNum = int(input("Enter number: "))
+
+print(checkNum(startRange,endRange,inputNum))

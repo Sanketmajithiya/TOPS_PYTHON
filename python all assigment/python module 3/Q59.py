@@ -1,5 +1,8 @@
-# Q.59 Write a Python program to convert degree to radian 
+# Write a Python program to convert degree to radian 
 
-import math
-degrees = 45
-print(f"{degrees} degrees is equal to {degrees * math.pi / 180} radians.")
+def degreeConverter(deg):
+    radian = deg * (3.14 / 180)
+    return radian
+
+input_degree = float(input("Enter any Degree: "))
+print(degreeConverter(input_degree))

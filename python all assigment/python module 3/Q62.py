@@ -1,11 +1,17 @@
-# Q.62 Write a Python program to calculate surface volume and area of a cylinder.
-import math
+# Write a Python program to calculate surface volume and area of a cylinder 
 
-cylinder_volume = lambda radius, height: math.pi * radius**2 * height
-cylinder_surface_area = lambda radius, height: 2 * math.pi * radius * (radius + height)
+"""
+cylinder volume: pi*r^2*h
+surface area : 2*pi*r*h + 2*pi*r^2
+"""
+def cylinderVolume(radius,height):
+    return 3.14*(radius**2)*height
 
-radius = float(input("Enter the radius of the cylinder: "))
-height = float(input("Enter the height of the cylinder: "))
+def cylinderSurfaceArea(radius,height):
+    return ((2*3.14*radius*height) + (2*3.14*radius**2))
 
-print("The volume of the cylinder is:", cylinder_volume(radius, height))
-print("The surface area of the cylinder is:", cylinder_surface_area(radius, height))
+radiusInput = int(input("Enter cylinder radius: "))
+heightInput = int(input("Enter cylinder height: "))
+
+print(f"Cylinder volume is: {cylinderVolume(radiusInput,heightInput)}")
+print(f"Cylinder surface area is: {cylinderSurfaceArea(radiusInput,heightInput)}")

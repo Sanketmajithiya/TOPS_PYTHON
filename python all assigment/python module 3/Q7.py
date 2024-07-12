@@ -1,17 +1,9 @@
-# Q.7 Write a Python program to remove duplicates from a list.
+# Write a Python program to remove duplicates from a list. 
 
-original_list = [1, 2, 3, 4, 2, 3, 5]
-rem_dup_items = []
-for i in original_list:
- if i not in rem_dup_items:
-   rem_dup_items.append(i)
-print(rem_dup_items)
+my_list = [10, 20, 30, 20, 20, 30, 40, 50, -20, 60, 60, -20, -20]
 
-
-
-
-
-
+uniq_list = list(set(my_list))
+print(uniq_list)
 
 
 

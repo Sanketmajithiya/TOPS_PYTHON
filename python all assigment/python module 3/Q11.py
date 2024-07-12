@@ -1,11 +1,15 @@
-# Q.11 Write a Python function that takes a list and returns a new list with unique elements of the first list. 
+# Write a Python function that takes a list and returns a new list with unique elements of the first list. 
+
+def removeDuplicate(list):
+    new_list = []
+    for i in range(0,len(list)):
+        for j in range(i+1,len(list)):
+            if list[i] not in new_list:
+                new_list.append(list[i])
+    return print(new_list)
 
 
-def unique_elements(input_list):
-    return list(set(input_list))
+my_list = [10, 20, 30, 20, 20, 30, 40, 50, -20, 60, 60, -20, -20]
 
-original_list = [1, 2, 3, 3, 4, 5, 5, 6]
-print("Original list:", original_list)
-print("Unique list:", unique_elements(original_list))
-
+removeDuplicate(my_list)
 

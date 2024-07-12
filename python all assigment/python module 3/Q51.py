@@ -1,7 +1,12 @@
-# Q.51 Write a Python function that checks whether a passed string is palindrome or not.
+# Write a Python function that checks whether a passed string is palindrome or not 
 
-def is_palindrome(s):
-    s = ''.join(char.lower() for char in s if char.isalnum())
-    return s == s[::-1]
-string = "A man, a plan, a canal: Panama"
-print(f"'{string}' is {'a palindrome.' if is_palindrome(string) else 'not a palindrome.'}")
+
+def Palindrome(str):
+    rev_str = str[::-1]
+    if rev_str == str:
+        return "Palindrome"
+    else:
+        return "Not Palindrome"
+
+input_str = input("Enter eny string: ")
+print(Palindrome(input_str))

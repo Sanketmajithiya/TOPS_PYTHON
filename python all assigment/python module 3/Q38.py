@@ -1,8 +1,20 @@
-# Q.38 Write a Python program to check multiple keys exists in a dictionary.
+# Write a Python program to check multiple keys exists in a dictionary.
 
-def check_keys_exist(keys, dictionary):
-    return all(key in dictionary for key in keys)
+dict1 = {
+    "apple":6,
+    "banana":7,
+    "cherry":9,
+    "apple":11
+}
 
-my_dict = {'a': 1, 'b': 2, 'c': 3}
-keys_to_check = ['a', 'b', 'd']
-print("All keys exist in the dictionary." if check_keys_exist(keys_to_check, my_dict) else "One or more keys do not exist in the dictionary.")
+key_List = ['apple','mango','cherry','pineaaple']
+for key in key_List:
+    if key in dict1:
+        print(f"{key} key is exists")
+    else:
+        print(f"{key} key is not exists")
+
+    
+
+
+

@@ -1,3 +1,10 @@
-# Q.15 Write a Python program to get unique values from a list.
+# Write a Python program to get unique values from a list 
 
-print("Unique values:", list(set([1, 2, 3, 4, 2, 3, 5, 6, 7, 6])))
+my_list = [10, 20, 30, 20, 20, 30, 40, 50, -20, 60, 60, -20, -20]
+
+unique_list = []
+
+for i in my_list:
+    if i not in unique_list:
+        unique_list.append(i)
+print(unique_list)

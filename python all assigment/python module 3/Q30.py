@@ -1,6 +1,6 @@
-# Q.30 Write a Python program to convert a list of tuples into a dictionary. 
+# Write a Python program to convert a list of tuples into a dictionary. 
 
-print("Resulting dictionary:", {key: value for key, value in [(1, 'a'), (2, 'b'), (3, 'c')]})
+my_list = [("name","sanket"),("surname","majithiya"),("age",22)]
 
-
-
+my_dict = dict(my_list)
+print(my_dict)

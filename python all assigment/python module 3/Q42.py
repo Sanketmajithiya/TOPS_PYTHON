@@ -1,5 +1,16 @@
-# Q.42 Write a Python program to print all unique values in a dictionary. 
+# Write a Python program to print all unique values in a dictionary. 
 
-my_dict = {'a': 1, 'b': 2, 'c': 3, 'd': 2, 'e': 1}
+my_dict1 = {
+    'a': 100, 
+    'b': 200, 
+    'c':300,
+    'd': 300, 
+    'e': 200, 
+    'f':400
+    }
 
-print("Unique values in the dictionary:", set(my_dict.values()))
+emp_list = []
+for key,value in my_dict1.items():
+    if value not in emp_list:
+        emp_list.append(value)
+print("unique values are: ",emp_list)

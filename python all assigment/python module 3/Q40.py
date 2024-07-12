@@ -1,6 +1,8 @@
-# Q.40 Write a Python program to map two lists into a dictionary .
+# Write a Python program to map two lists into a dictionary 
 
-keys = ['a', 'b', 'c']
-values = [1, 2, 3]
-# Print the mapped dictionary directly using dictionary comprehension within the print statement
-print("Mapped dictionary:", {k: v for k, v in zip(keys, values)})
+my_list1 = [1,2,3]
+my_list2 = [99,88,77]
+
+my_dict = dict(zip(my_list1,my_list2))
+
+print(my_dict)

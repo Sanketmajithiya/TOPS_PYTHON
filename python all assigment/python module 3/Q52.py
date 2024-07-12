@@ -1,11 +1,25 @@
-# Q.52 How Many Basic Types Of Functions Are Available In Python? 
+# How Many Basic Types Of Functions Are Available In Python? 
 
 """
-Built-in Functions: These are functions that are built into the Python interpreter and are available for use without needing to import any module. Examples include print(), len(), sum(), etc.
+Built-in-function: 
 
-User-defined Functions: These are functions defined by the user to perform a specific task. User-defined functions are created using the def keyword.
-
-Anonymous Functions (Lambda Functions): These are small, inline functions that do not have a name. They are created using the lambda keyword and are often used for short, one-liner operations.
-
+print(): Used to display output on the screen.
+input(): Takes input from the user via the keyboard.
+len(): Returns the length of an object, such as a string, list, tuple, etc.
+type(): Returns the type of an object.
+int(), float(), str(), bool(): Used for type conversion.
+range(): Generates a sequence of numbers.
+max(), min(): Returns the maximum or minimum value in a sequence.
+sum(): Returns the sum of elements in a sequence.
+sorted(): Returns a sorted list from the elements of any iterable.
+abs(): Returns the absolute value of a number.
+round(): Rounds a number to a specified number of decimal places.
+zip(): Combines multiple iterables into a single iterable of tuples.
+"""
 
 """
+user-define function:
+
+def function_name
+"""
+

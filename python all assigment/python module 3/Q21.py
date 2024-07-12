@@ -1,3 +1,6 @@
-# Q.21 Write a Python program to convert a tuple to a string.
+# Write a Python program to convert a tuple to a string. 
 
-print("Resulting string:", ''.join(('a', 'b', 'c', 'd', 'e')))
+my_tuple = ('s','a','n','k','e','t')
+my_str = "".join(my_tuple)
+
+print(my_str)

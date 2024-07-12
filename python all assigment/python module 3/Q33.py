@@ -1,25 +1,18 @@
-# Q.33 Write a Python script to concatenate following dictionaries to create a new one. 
+# Write a Python script to concatenate following dictionaries to create a new one. 
 
+dict1 = {
+    "apple": 2,
+    "banana":4
+}
 
-dict_1 = {1:'sanket',2:'dipak'}
-dict_2 = {3:'kiran', 4:'jay'}
-dict_3 ={5:'vicky',6:'sameer'}
-new_dict = {}
+dict2 = {
+    "mango":6,
+    "banana": 4
+}
 
-for dict_element in dict_1,dict_2,dict_3:
-    new_dict. update(dict_element)
-print(new_dict)    
+# new_dict = dict1 | dict2
 
+new_dict = dict2
+new_dict.update(dict1)
 
-
-
-
-
-
-
-
-
-
-
-
-
+print(new_dict)

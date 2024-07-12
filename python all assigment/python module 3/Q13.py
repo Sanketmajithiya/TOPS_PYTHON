@@ -1,27 +1,10 @@
-# Q13 Write a Python program to select an item randomly from a list.
-
-# import random
-# print("Randomly selected item:", random.choice(['apple', 'banana', 'orange', 'grape', 'pineapple']))
+# Write a Python program to select an item randomly from a list. 
 
 import random
-print("Rendomly selected items:",random.choice(['apple','banana','greps','orange']))
 
-    
-
+my_list = ['s','a','n','k','e','t']
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+randomNum = random.randint(0,len(my_list))
+randomChar = my_list[randomNum]
+print(randomChar)

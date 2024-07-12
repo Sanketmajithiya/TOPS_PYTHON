@@ -1,3 +1,7 @@
-# Q.25 Write a Python program to reverse a tuple. 
+# Write a Python program to reverse a tuple
 
-print("Reversed tuple:", (1, 2, 3, 4, 5)[::-1])
+input_tuple = input("Enter eny element seprated by comma: ").split(",")
+
+print(f"Your Original Tuple is: {tuple(input_tuple)}")
+
+print(f"Your reverse Tuple is: {tuple(input_tuple[::-1])}")

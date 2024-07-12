@@ -1,33 +1,13 @@
-# Q.3 Differentiate between append () and extend () methods? 
+"""
+Difference between append () and extend () methods? 
+"""
+# append():
+# we can add new item in old list at the END as a single element.
+my_list = [1,2,3]
+my_list.append(["sanket","majithiya"])
+print(my_list) # [1, 2, 3, ['sanket', 'majithiya']]
 
-""" 1 append(): This method adds a single element to the end of the list."""
-# my_list = [1, 2, 3]
-# my_list.append(4)
-# print(my_list)  
-"""2 extend(): This method adds elements from an iterable (such as a list, tuple, or another iterable) to the end of the list. It essentially concatenates the iterable with the list."""
-
-my_list = [1, 2, 3]
-another_list = [4, 5, 6]
-my_list.extend(another_list)
-print(my_list)  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# extend():
+# we can add all elements at the end of list
+my_list.extend(([4,5],{1,2,3,1}))
+print(my_list)

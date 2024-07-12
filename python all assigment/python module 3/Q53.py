@@ -1,5 +1,14 @@
-# Q.53 How can you pick a random item from a list or tuple?
+# How can you pick a random item from a list or tuple? 
+
+# by using random library
+
 import random
-my_list = [1, 2, 3, 4, 5]
-random_item = random.choice(my_list)
-print("Random item from the list:", random_item)
+
+my_tuple = (1,2,3,4,5,6,7)
+my_list = ["sanket","Deepak","kalam","ramesh"]
+
+randomNum = random.randrange(0,len(my_tuple))
+randomNum1 = random.randrange(0,len(my_list))
+
+print(my_tuple[randomNum])
+print(my_list[randomNum1])

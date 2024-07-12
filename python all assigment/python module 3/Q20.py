@@ -1,3 +1,4 @@
-# Q.20 Write a Python program to create a tuple with numbers. 
+# Write a Python program to create a tuple with numbers. 
 
-print("Numbers Tuple:", (10, 20, 30, 40, 50))
+my_tuple = (1,2,3,4,5)
+print(my_tuple)

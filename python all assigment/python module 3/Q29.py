@@ -1,3 +1,12 @@
-# Q.29 Write a Python program to unzip a list of tuples into individual lists. 
+# Write a Python program to unzip a list of tuples into individual lists. 
 
-print("Unzipped lists:", list(zip(*[(1, 'a'), (2, 'b'), (3, 'c')])))
+my_list = [("name","sanket"),("surname","majithiya"),("age",22)]
+
+list1 = []
+list2 = []
+
+for i in my_list:
+    list1.append(i[0])
+    list2.append(i[1])
+print("List 1: ",list1)
+print("List 2: ",list2)

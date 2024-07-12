@@ -1,3 +1,7 @@
-# Q.24 Write a Python program to convert a list to a tuple. 
+# Write a Python program to convert a list to a tuple
 
-print("Resulting tuple:", tuple(['apple', 'banana', 'orange', 'grape']))
+list_input = input("Enter any element seprated by comma: ").split(",")
+
+print(f"Your list is:{list_input}")
+
+print(f"Your tuple is:{tuple(list_input)}")

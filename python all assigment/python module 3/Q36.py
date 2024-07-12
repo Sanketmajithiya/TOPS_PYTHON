@@ -1,10 +1,15 @@
-# Q.36 How Do You Check The Presence Of A Key In A Dictionary?
+# How Do You Check The Presence Of A Key In A Dictionary? 
 
-my_dict = {'a': 1, 'b': 2, 'c': 3}
+my_dict = {
+    1 : 99,
+    2 : 88,
+    3 : 77,
+    4 : 66
+}
 
-if 'a' in my_dict:
-    print("'a' key exists in the dictionary.")
+inputKey = int(input("Enter any value: "))
+
+if inputKey in my_dict:
+    print(f"{inputKey} key is exists in dictionary.")
 else:
-    print("'a' key does not exist in the dictionary.")
-
-
+    print(f"{inputKey} key is not exists in dictionary.")

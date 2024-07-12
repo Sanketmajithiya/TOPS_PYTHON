@@ -1,12 +1,22 @@
-# Q.1 What is List? How will you reverse a list? 
-
 """
-In Python, a list is a data structure that is used to store a collection of items. Lists are mutable, which means you can change the elements they contain. Lists are defined by enclosing a comma-separated sequence of items within square brackets [ ].
- """
-my_list = [1, 2, 3, 4, 5]
-my_list.reverse()
+What is List? How will you reverse a list? 
+"""
 
-print(my_list) 
+# In Python, a list is built-in data structure used to store a collection of items. 
+# It's ordered and mutable, meaning you can change, add, and remove elements after it's created. 
+# Lists can contain elements of different types, including integers, floats, strings, or even other lists. 
+
+#---(method 1)---------------------
+my_list = ["sanket","majithiya"]
+rev_list = my_list[::-1]
+print(rev_list)
 
 
-
+#-----(method 2)-------------------------------
+my_list = ["sanket","majithiya"]
+rev_list = []
+i = len(my_list)-1
+while i>=0:
+    rev_list.append(my_list[i])
+    i = i - 1   
+print(rev_list)
