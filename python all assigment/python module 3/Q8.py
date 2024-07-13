@@ -12,3 +12,8 @@ if not list2:
     print("The list is empty")
 else:
     print("The list is not empty")
+
+
+
+
+
