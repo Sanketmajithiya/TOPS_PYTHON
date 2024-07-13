@@ -1,2 +1,5 @@
-myvenv/
+#my virtuall file
+myvenv
+
+#my env
 .env
