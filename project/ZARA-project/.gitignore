@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 #my virtuall file
+/venv
 myvenv
 
 #my env
-=======
-myvenv
->>>>>>> f9dfd396de4b806773cb813f8ad70a7f30dda0ea
 .env
+
