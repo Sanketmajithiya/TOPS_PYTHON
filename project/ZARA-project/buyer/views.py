@@ -16,8 +16,6 @@ from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
 from django.http import HttpResponse
 from master.utils.LO_UNIQUE.generate_order_id import generate_unique_order_id
-
-
 import os
 
 def login_required(view_func):
